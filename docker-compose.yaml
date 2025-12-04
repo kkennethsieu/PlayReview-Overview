@@ -1,0 +1,70 @@
+version: "3.9"
+services:
+  user-service:
+    build: ./user-service
+    ports:
+      - "3001:3001"
+    environment:
+      ACCESS_TOKEN_SECRET: 9999
+      REFRESH_TOKEN_SECRET: 8888
+
+  catalog-service:
+    build: ./catalog-service
+    ports:
+      - "3002:3002"
+
+  reviews-service:
+    build: ./reviews-service
+    ports:
+      - "3003:3003"
+
+  likes-service:
+    build: ./likes-service
+    ports:
+      - "3004:3004"
+    environment:
+      LIKES_PORT: 3004
+      RABBITMQ_URL: amqp://rabbitmq:5672
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "3005:3005"
+    environment:
+      NOTIFY_PORT: 3005
+      USER_SERVICE: http://user-service:3001
+      GAME_SERVICE: http://catalog-service:3002
+      REVIEW_SERVICE: http://reviews-service:3003
+      RABBITMQ_URL: amqp://rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "8000:8000"
+    environment:
+      GATEWAY_PORT: 8000
+      USER_SERVICE: http://user-service:3001
+      GAME_SERVICE: http://catalog-service:3002
+      REVIEW_SERVICE: http://reviews-service:3003
+      LIKES_SERVICE: http://likes-service:3004
+    depends_on:
+      - user-service
+      - catalog-service
+      - reviews-service
+      - likes-service
+
+  # frontend:
+  #   build: ./game-frontend
+  #   ports:
+  #     - "5173:5173"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
