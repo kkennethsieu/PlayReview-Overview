@@ -47,7 +47,7 @@ Node.js, Express, React, TailwindCSS, Docker, RabbitMQ, SQLite, Python, Flask
 Your folder structure should look like this:
 
 ```
-game-review-platform/
+GameReview/
   docker-compose.yml
   user-service/
   game-service/
