@@ -1,4 +1,4 @@
-# 🎮 Game Review Microservice Platform
+# 🎮 Play Review Microservice Platform
 
 **Full-stack, Dockerized microservice platform for reviewing and liking games.**
 
