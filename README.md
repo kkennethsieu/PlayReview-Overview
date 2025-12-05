@@ -92,8 +92,12 @@ docker compose up --build
 ---
 
 ## 🎥 Screenshots
-![Home Page](./screenshots/homepage.png)
-![My Account](./screenshots/myAccount.png)
-![About Game](./screenshots/aboutGame.png)
-![Add Review](./screenshots/addReview.png)
-![Trending Games](./screenshots/trendingGames.png)
+
+| Home Page | My Account |
+|-----------|------------|
+| ![Home Page](./screenshots/homepage.png) | ![My Account](./screenshots/myAccount.png) |
+
+| About Game | Add Review | Trending Games |
+|------------|------------|----------------|
+| ![About Game](./screenshots/aboutGame.png) | ![Add Review](./screenshots/addReview.png) | ![Trending Games](./screenshots/trendingGames.png) |
+
