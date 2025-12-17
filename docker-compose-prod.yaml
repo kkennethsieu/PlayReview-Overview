@@ -2,41 +2,38 @@ version: "3.9"
 services:
   rabbitmq:
     image: rabbitmq:3-management
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    env_file:
+      - .env
     restart: always
 
   user-service:
     image: public.ecr.aws/x1y7v9f2/user-service:latest
-    environment:
-      ACCESS_TOKEN_SECRET: ${ACCESS_TOKEN_SECRET}
-      REFRESH_TOKEN_SECRET: ${REFRESH_TOKEN_SECRET}
+    env_file:
+      - .env
     restart: always
 
   catalog-service:
     image: public.ecr.aws/x1y7v9f2/catalog-service:latest
+    env_file:
+      - .env
     restart: always
 
   reviews-service:
     image: public.ecr.aws/x1y7v9f2/reviews-service:latest
+    env_file:
+      - .env
     restart: always
 
   likes-service:
     image: public.ecr.aws/x1y7v9f2/likes-service:latest
-    environment:
-      LIKES_PORT: ${LIKES_PORT}
-      RABBITMQ_URL: ${RABBITMQ_URL}
+    env_file:
+      - .env
     restart: always
 
   notification-service:
     image: public.ecr.aws/x1y7v9f2/notification-service:latest
-    environment:
-      NOTIFY_PORT: ${NOTIFY_PORT}
-      USER_SERVICE_URL: ${USER_SERVICE_URL}
-      GAME_SERVICE_URL: ${GAME_SERVICE_URL}
-      REVIEW_SERVICE_URL: ${REVIEW_SERVICE_URL}
-      RABBITMQ_URL: ${RABBITMQ_URL}
+    env_file:
+      - .env
     depends_on:
       - rabbitmq
     restart: always
@@ -44,14 +41,9 @@ services:
   gateway-service:
     image: public.ecr.aws/x1y7v9f2/gateway-service:latest
     ports:
-      - "80:8000" # Public entry point
-    environment:
-      GATEWAY_PORT: ${GATEWAY_PORT}
-      USER_SERVICE_URL: ${USER_SERVICE_URL}
-      GAME_SERVICE_URL: ${GAME_SERVICE_URL}
-      REVIEW_SERVICE_URL: ${REVIEW_SERVICE_URL}
-      LIKES_SERVICE_URL: ${LIKES_SERVICE_URL}
-      NOTIFICATION_SERVICE_URL: ${NOTIFICATION_SERVICE_URL}
+      - "80:8000"
+    env_file:
+      - .env
     depends_on:
       - user-service
       - catalog-service
